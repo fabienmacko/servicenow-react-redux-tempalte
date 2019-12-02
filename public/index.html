@@ -8,10 +8,11 @@
       for local development it will be hidden on a page.
     -->
     <div style="display:none">
-      <g:evaluate object="true"> 
+      <g:evaluate object="true">
         var session = gs.getSession(); 
         var token = session.getSessionToken();
         if (token=='' || token==undefined) token = gs.getSessionToken();
+        var userId = gs.getUserID();
       </g:evaluate>
     </div>
     <!-- 
@@ -21,6 +22,7 @@
     -->
     <script>
       window.servicenowUserToken = "$[token]";
+      window.servicenowUserId = "$[userId]";
     </script>
   </head>
   <body>

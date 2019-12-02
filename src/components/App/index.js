@@ -1,37 +1,30 @@
 import React from 'react';
-import axios from 'axios';
-import './App.css';
+import Incidents from '../../containers/Incidents';
+import Create from '../../containers/Create';
+import {Switch, Route, Link} from 'react-router-dom';
+import './app.scss';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      incidents: [],
-    };
-  }
 
   componentDidMount() {
-    axios.get('/api/now/table/incident?sysparm_limit=3')
-    .then(({data}) => {
-      
-      this.setState({incidents: data.result});
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+    this.props.getIncidents();
   }
 
   render() {
     return (
-      <div>
-        <h2>Hello, ServiceNowwwww!</h2>
-        <h3>Here is a list of the 3 firsts incidents</h3>
-        <ul>
-          {
-            this.state.incidents.map(incident => <li>{incident.number}</li>)
-          }
-        </ul>
+      <div id="app">
+  <h1>Hello Servicenoooow</h1>
+        <Link to="/react_app_incident.do/create"><button>Create new incident</button></Link>
+        <Link to="/react_app_incident.do"><button>List of incidents</button></Link>
+        <Switch>
+          <Route exact path="/react_app_incident.do">
+            <Incidents/>
+          </Route>
+
+          <Route exact path="/react_app_incident.do/create">
+            <Create />
+          </Route>
+        </Switch>
       </div>
     )
   }
